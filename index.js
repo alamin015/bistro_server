@@ -46,11 +46,21 @@ async function run() {
         res.send(cursor)
     })
 
+    app.get('/cart',async (req,res) => {
+      const gmail = req.query.email;
+      if(!gmail){
+        res.send([]);
+      }
+      const query = { email: gmail };
+      const result = await carts.find(query).toArray();
+      res.send(result)
+  })
+
     app.post('/cart',async (req,res) => {
         // const gmail = req.params.email;
         const data = req.body;
         const result = await carts.insertOne(data);
-        
+        console.log(data)
         res.send(result)
     })
 
